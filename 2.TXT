@@ -1,0 +1,240 @@
+--
+graphics_mode(3)
+
+function get_command(string)
+len=string_length(string)
+ for i=1 to len do
+    chr=string_chr_at(string,i)
+    if chr="-" then
+      ii=i
+      ii+=1
+      chr=string_chr_at(string,ii)
+      if chr="-" then
+        return 1
+      end if
+    end if
+ end for
+find=0
+ for i=1 to len do
+    chr=string_chr_at(string,i)
+    if chr="=" then
+      for j=i to len do
+         chr=string_chr_at(string,j)
+         if chr="(" then
+           find=1
+           exit
+         end if
+      end for
+    if find=0 then
+      return 2
+    end if
+    return 3
+    end if
+ end for
+return 0
+end function
+
+string_info[1,1]=""
+number_info[1]=0
+number_name[1]=""
+num1=0
+num2=0
+global num1
+global num2
+global string_info
+global number_info
+global number_name
+
+function get_info2(name)
+  for i=1 to num1 do
+     if string_info[i,1]=name then
+       return string_info[i,2]
+     end if
+  end for
+  for i=1 to num2 do
+     if number_name[i]=name then
+       return number_info[i]
+     end if
+  end for
+return "#"
+end function
+
+sub set_info2(string)
+len=string_length(string)
+find=0
+ for i=1 to len do
+    chr=string_chr_at(string,i)
+    if chr="'" then
+      find=1
+      len=i
+      exit
+    end if
+ end for
+
+if find=1 then
+temp=""
+  for i=1 to len do
+    chr=string_chr_at(string,i)
+    if chr!=" " then
+      temp+=chr
+    end if
+  end for
+  len=string_length(temp)
+  for i=1 to len do
+    chr=string_chr_at(temp,i)
+    if chr="=" then
+      pos1=i
+      pos1-=1
+      exit
+    end if
+  end for
+  name=string_copy(temp,1,pos1)
+  len=string_length(string)
+  for i=1 to len do
+    chr=string_chr_at(string,i)
+    if chr="'" then
+      pos1=i
+      pos1+=1
+      exit
+    end if
+  end for
+  for i=pos1 to len do
+    chr=string_chr_at(string,i)
+    if chr="'" then
+      ii=i
+      ii-=1
+      val=string_copy(string,pos1,ii)
+      exit
+    end if
+  end for
+  find=0
+  for i=1 to num1 do
+     if string_info[i,1]=name then
+       string_info[i,2]=val
+       find=1
+       exit
+     end if
+  end for
+  if find=0 then
+    num1+=1
+    string_info[num1,1]=name
+    string_info[num1,2]=val
+  end if
+find=1
+end if
+--
+--
+if find=0 then
+pos1=0
+pos2=0
+  for i=1 to len do
+     chr=string_chr_at(string,i)
+     if chr!=" " then
+       pos1=i
+       exit
+     end if
+  end for
+  for i=pos1 to len do
+     chr=string_chr_at(string,i)
+     if chr="=" then
+       pos2=i
+       pos2-=1
+       exit
+     end if
+     if chr=" " then
+       pos2=i
+       pos2-=1
+       exit
+     end if
+  end for
+  name=string_copy(string,pos1,pos2)
+  pos1=0
+  pos2=0
+  for i=1 to len do
+     chr=string_chr_at(string,i)
+     if chr="=" then
+       pos1=i
+       pos1+=1
+       exit
+     end if
+  end for
+  for i=pos1 to len do
+     chr=string_chr_at(string,i)
+     if chr!=" " then
+       pos1=i
+       exit
+     end if
+  end for
+  for i=pos1 to len do
+     chr=string_chr_at(string,i)
+     if chr=" " then
+       pos2=i
+       pos2-=1
+       exit
+     end if
+     if i=len then
+       pos2=i
+       exit
+     end if
+  end for
+-- this is where the fun part starts
+  name2=string_copy(string,pos1,pos2)
+  vall=get_info2(name2)
+  type=is_real(vall)
+  if type=0 then
+  if vall="#" then
+    vall=name2
+    val=real(vall)
+    find=0
+    for i=1 to num2 do
+     if number_name[i]=name then
+       number_info[i]=val
+       find=1
+       exit
+     end if
+    end for
+    if find=0 then
+      num2+=1
+      number_name[num2]=name
+      number_info[num2]=val
+    end if
+  end if
+  if vall!="#"  then
+    print(2)
+  end if
+  end if
+  ---
+  ---
+  if type=1 then
+    find=0
+    for i=1 to num2 do
+     if number_name[i]=name then
+       number_info[i]=vall
+       find=1
+       exit
+     end if
+    end for
+  if find=0 then
+    num2+=1
+    number_name[num2]=name
+    number_info[num2]=vall
+  end if
+  end if
+end if
+end sub
+
+sub execute_string(string)
+--1 is -- 2 is a=a 3 is a=gg()
+code=get_command(string)
+if code=2 then
+  set_info2(string)
+end if
+end sub
+
+execute_string("text='a d f g '")
+execute_string("asd='gaz'")
+execute_string("num= 12")
+execute_string("num2= num")
+execute_string("asd=text")
+a=get_info2("num2")
+--print(a)

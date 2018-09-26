@@ -1,0 +1,193 @@
+-- set the graphics mode to pixle screen  640/480
+graphics_mode(3)
+-- set the background color to blue
+bk_color(1)
+-- set the text color to light gray
+text_color(2)
+-- draw the title at positions 1/30
+position(1,30)
+print("Database Program")
+position(2,30)
+print("----------------")
+
+-- draw the commands
+text_color(4)
+position(4,2)
+name="(1)"
+print(name)
+position(4,10)
+name="(2)"
+print(name)
+position(4,22)
+name="(3)"
+print(name)
+text_color(2)
+position(4,5)
+name="add"
+print(name)
+position(4,13)
+name="find"
+print(name)
+position(4,25)
+name="exit"
+print(name)
+--
+-- draw the input box
+position(28,1)
+name="-------------------------------------------------------------------------------"
+print(name)
+position(30,1)
+name="-------------------------------------------------------------------------------"
+print(name)
+--
+function get_chr()
+key=get_key()
+  if key!=0 then
+    if key>0 then
+      if key<256 then
+        if key!=27 then
+          return key
+        end if
+      end if
+    end if
+  end if
+  return 0
+end function
+
+function get_input(info)
+timer=0
+len1=string_length(info)
+len1+=2
+position(29,1)
+print(info)
+pos=len1
+string=""
+  while 1=1 do
+     timer+=0.01
+     if timer>5 then
+       if timer<5.2 then
+         position(29,pos)
+         print("_")
+       end if
+     end if
+     if timer>10 then
+         position(29,pos)
+         print(" ")
+         timer=0
+     end if
+    key=get_chr()
+    if key>0 then
+      if key!=8 then
+        if key!=13 then
+          if key!=1 then
+            chr=string_chr(key)
+            string+=chr
+            position(29,pos)
+            print(" ")
+            pos+=1
+            position(29,len1)
+            print(string)
+            timer=0
+           end if
+         end if
+       end if
+     end if
+     if key=13 then
+       position(29,1)
+       print("                                                                              ")
+       return string
+     end if
+     if key=8 then
+       len=string_length(string)
+       if len>0 then
+        string=string_remove_chr(string,len)
+        position(29,pos)
+        print(" ")
+        pos-=1
+        position(29,len1)
+        print(string)
+        timer=0
+      end if
+    end if
+  end while
+end function
+
+sub add()
+while 1=1 do
+  temp=get_input("enter name?")
+  if temp!="" then
+    insert_row(temp)
+    row=temp
+    exit
+  end if
+end while
+while 1=1 do
+  temp=get_input("enter phone number?")
+  if temp!="" then
+    insert_col(row,"phone",temp)
+    exit
+  end if
+end while
+end sub
+
+sub find()
+can=1
+while 1=1 do
+  temp=get_input("enter name?")
+  if temp!="" then
+    col=get_data(temp,"phone")
+    row=temp
+    if col!="" then
+      position(24,1)
+      print("found ")
+      print(row)
+      exit
+    end if
+    if col="" then
+      position(24,1)
+      print("can't find ")
+      print(row)
+      can=0
+      exit
+    end if
+  end if
+end while
+while can=1 do
+ position(25,1)
+ print(row)
+ position(26,1)
+ print(col)
+ can=0
+end while
+end sub
+
+sub main()
+temp=""
+err=db_open("1.txt")
+while 1=1 do
+key=get_key()
+if key=49 then
+  add()
+end if
+if key=50 then
+  find()
+end if
+if key=51 then
+  while 1=1 do
+    temp=get_input("do you want to exit y or n?")
+    if temp="y" then
+    bk_color(0) 
+    cls()
+    db_close()
+    abort()
+    end if
+    if temp="n" then
+      exit
+    end if
+  end while
+end if
+end while
+db_close()
+end sub
+
+main()

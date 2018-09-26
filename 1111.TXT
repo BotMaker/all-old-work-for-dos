@@ -1,0 +1,250 @@
+                  Programing Language Risk
+                   Made By Gareth Mc Daid
+                         Version 0.3
+                  Copyright (c) Biosoft 2005.
+
+ The Risk programing language has came a long way its now a full operating
+ program language it surports all data types and all data can be assined to
+ an array.
+
+ data types avaliable are integer, atoms, and strings.
+ The string data type is the most important data type 
+
+ Risk comes with over 10 functions to do with the data type string
+ most of these function are to return a part of a string.
+ you can remove a part of a string and you can insert a string into a string.
+
+ Risk comes with over 60 functions some of them happen to do the same thing
+ or close to the same like the close function and the file_close they do not
+ do the same thing but are very a like.
+
+ there are some very important function that are not to be used that is
+ because they might cause your computer to crash or cause lost of data
+ these function can be used if used in the right way.
+ the functions iam talking about are to do with your computers memory
+ they give a way to read and to write to memory and to allocate memory.
+ these function give you the programmer access to the memory.
+ these functions are very esay to uses here a exsample of allocate memory
+
+ address = allocate(100)
+
+ the exsmaple above set 100 bytes of memory to 0 so that they can be read or
+ write and set the variable address to the memory address. here a exsample of
+ write memory
+
+ mem_write( address , 10)
+
+ the exsample above write a byte in memory at address. here a exsample of read memory
+
+ byte1 = men_read(address)
+
+ the exsample above read a byte of memory at address the variable byte1 has a
+ value of 10 
+
+ Welcome
+
+ risk should be makeing me lots of money but its not and do you no what
+ i don't what to miss a day of selling my program to the world wide web
+ so that a can start my very own software brand called biosoft or bioware
+ or biosoftware or risk is very hard to come by you no so bye me...?
+
+ the basic of programming in risk. risk comes with the most basic of commands
+ so that it can be uses as a learning programing language. the most basic
+ command is to set a variable. a variable is a place where data is store.
+
+ to set a variable to a value you would frist think of a name that would be
+ most suted to the data so lets say that the data is some ones name so you
+ could give your variable a name of text now that you have decidid up on
+ a name for your variable you simple type in text = "gareth" you have just
+ set variable text to a value of "gareth".
+
+ the next command you will learn is the for statemnet or for loop for short
+ in the above exsices you leaned now to set variable text to "gareth"
+ this time you will use the for loop to set a variable. the for loop
+ is called a controling statement because it controls the way the program
+ executes. the for loop can repeat a block of code a set number of times
+ the way it work is you set a variable to a value the value must be data
+ type integer that means a number and then you pass a value to the for loop
+ to wich is the number that the for loop counts up to when the variable is
+ equal to the counting number then that block of code is no longer executed
+ here is exsample
+
+ for i=1 to 10 do
+    number = i
+ end for
+
+ has you can see the for loop locks very simple when you break it down.
+ this is how it works variable i is set to a value of 1 and the counting
+ to variable to a value of 10 so the code in beween the beging for loop
+ and the end for statemnet will be executed 10 times so variable number will
+ have a value of 10 ever time the for loop is execute the variable i is set
+ to value of one large than it self. you can make the variable i value count
+ up or down i show you
+
+ for i=10 to 1 by -1 do
+    number = i
+ end for
+
+ this time the for loop start of with a value of 10 and counts down by -1
+ each time its executed the variable number will have a value of 1
+
+ remember that iam usesing a very slow computer it runs at 500 mhz and the
+ memory is 32 mege bytes and most new computers run at 3000 mhz and have a
+ memory size of 512 mege bytes so i think my program could easy execute
+ 5000 lines a second. all the information below has been base on my computer.
+ 
+ risk is a new and up comeing programming language
+ risk is very fast program it can execute up to 1500 lines of code a second
+ risk can execute a lest 500 lines of code a second and up to 1500 lines
+ most languages can execute up to 4000 lines a second so my language is
+ still very fast and is very fast when it comes to the graphics and the
+ opening of files
+ the risk programing language is slow when it comes to variables
+ and because variables are uses all the time the overall program is slow
+ compare to 4000 lines a second and it get very slow when variables are
+ arrays so to speed up your program you might need to wait intill there
+ is a fast way of prossing variables...?
+
+ to make the variable system work a lot faster will take some time
+ it needs to be write in to memory and this should make it run moor
+ faster but i think that the variable system in uses now will be the fasts
+ out of the two so i should put my time in to makeing the current system
+ moor faster.
+
+ most of the code for risk is very simple to understand provied you have
+ a basic understanding of programming. risk was write in Euphoria
+ and has taken 120 hours to program. the code can be yours for œ 10 pound
+ so that you can make improvements but not so that you can sell.
+ the risk program is copyright to grath mc daid and is the soul owner
+ no one else can distrubute risk. i asept no respons abity for damage caused
+ to your computer by risk. risk is freeware program for all to use.
+
+              Programming By Gareth Mc Daid 
+ Copyrights (C) Biosoft Software LTD. All rights reserved.
+
+ My computer has crashed and i have lost all of my work includeing all the
+ risk programing code and i forgot to backup all of my work so iam fuck
+ will its not all that bad i do have some of my risk code backup up on a disk
+ but its from a very old version will not that old its version 0.2 so one
+ down from this one but version 0.3 was a complet wee write and was so mush
+ fast and had lost moor functionality. ok so i need to write the hole program
+ again but i have a lot of over programs iam in beteew like my new picture
+ format and my new drawing program and will i don't actshual need risk at
+ this monement in time i mean risk was buitld so i could execute code in my
+ programs and i don't have any programs that i can make het that need risk
+ so iam going to let it die for the time being and when i get windows i will
+ make my visual basic like programing language yes that means i working
+ without window and work on disk operating system (dos) i have so menay iders
+ but no way to make them or to learn how to make them so plese let me have a
+ mouth with out no interupsions to learn and make wot it is i so desier to
+ make pleses on windows and the internet thanks gareth lewis mc daid.
+
+ update iam make a new picture format its so much beter than .bmp and .gif
+ formats my format .pic has 24 bit colours and transprants and compresion and
+ anamtions and i hope to god i can add some sort of colour blending to my
+ format just like vector images made by micromeaider and i will make tools
+ and let all the souce code and program be downlaod for free and provide code
+ so that pepole if they want can use my picture format in ther program.
+
+ i don't think my picture format will be use by anyone to be onest i can't
+ see it being used at all and its not being made to make me money but if it
+ can then i will be very happy very un likey it could make money
+
+ i want to make a drawing program for windows that will sorport my new
+ picture format and these formats bmp, gif i belave i could make this type
+ of program in windows because of what i have done in dos i have made two
+ drawing programs and i have got to say they were not a challang for me
+ one of then was very close to the windows drawing program that comes with
+ micosoft windows and in some ways a lot beter then the windows drawing
+ program because of the fact that it has a very avances anamtions setup
+ and it was writen in dos
+
+ if i could make this drawing program i will beleave iam a good programer
+ and that i can program just about any thing i can think of with in realty
+
+ if i am a good programer i would like to make a program that can give the
+ pubic when i say pubic i mean some like my mum and dad and frinds a esay
+ way to make ther ony programs so long has they have insprebtion to do
+ so i think this program could let then make a program like a cdplayer or
+ a database program or will i don't no what they will want to make so
+ i will say simply programs that they will what to have that they could
+ esay go and downlaod for free but want to make there ony for what ever
+ reseaon or they can't get because it has not bein made yet or the
+ program could be airm at the programer so they can make programs esay and
+ faster and add there very fecturs to the program so that they can show the
+ world how good they are at programing and to sher they konge
+
+ i hope iam not set back by my lack of exsperco with windows gui code
+ or if iam set back by the compley of leraning a new thing then i hope
+ not for a long time
+
+ i have come up with a way to make robots a lot smarter than they are now by
+ giveing then the abity to rember a place where they have been to befor
+ and the abity to chose to go back to that place for what ever resaon
+ has sone has they deside to go back to that place they can do without any
+ problems at all and of crouse it smart anoth to avold objects
+
+ it works by rembring its path befor it by remening the setps it has
+ take to get where it is now and the rest is my secret. no i realy
+ think it will work in fact i no it could work as long as somebody how
+ had the skils to make what i won't then it would work
+
+ just think about this if you colud remeber every movement you ever made
+ to the smallits number then you could work your way back to where
+ you start from so long has nothing else has move in to your path but
+ if something had move in your path you could make add a new path to your
+ exsisting path at the point the object was blocking your path and this path
+ work a way a round the object and you all so new a way to attacth this path
+ to your exsiting path all this can be done with esay i beleave all you have
+ to do is look at the past setps it has taken you to get where you are from
+ these setps you could work out your cutrent angel so long has you had a
+ starting angel and you can acturly try this your self on your self see if
+ you can work it its very simple
+
+ a list of programs i won't to make for windows
+ a drawing program               " hard    " free
+ a program createing program     " hard    " selling
+ a programing language           " hard    " selling
+ a program to deveolp web pages  " so hard " selling
+ a intenet exsplour              " so hard " free
+ a game makeing program          " so hard " free
+ a cd/mp3/wav player             " esay    " free
+ a autorun maker program for cds " esay    " free
+ a install maker program         " esay    " free
+ a text editer\briny editer      " esay    " free
+ a program to develop euphoria code "any      "any   "maybe
+
+ the drawing program is a smart looking program and very clever it all
+ so sorports my new and upcoming picture file format and that means it
+ will have some realy good desing put into it because it will be sorporting
+ anamtions.
+
+ the program createing tool will devople programs for the user with simpley
+ clicking the mouse and draging and droping icons you will beable to make all
+ sorts of program rangeing from simple programs like a cdplayer to a complex
+ program like a program to deal with a small bisnuis pay role and staf basicy
+ a datebase program of corse to be able to work out pay role you will have to
+ not type in code but still useing the simple user interface declare variable
+ and doing equasons on them of corse if you want to type in code then you can
+ but for a program like this it will not be nesarnce
+
+ the programing language program is going to be very cool i think it will
+ be base on the game maker core programing language made by make overmenas
+ but the program language iam makeing is not airm at games its being made for
+ windows forms and the main program wiil look like visual basic made by
+ micosoft corp in fact my programing language is going to be the frist to
+ be very close to visual basic interface.
+
+ the web page delopement tool is going to be able to deal with all the html
+ code you will be able to open web pages and edit them and make new ones
+ you will be able to do all the thing you can to a web page insert tables
+ insert text insert pictures.
+
+ the intenet explore a long way off
+
+ the game maker tool is going to be just like the game maker made by mark
+ overmens
+
+ a list of programs i won't to make for dos
+ a gui program     " hard     "free
+ a drawing program " esay     "free

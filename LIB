@@ -1,0 +1,484 @@
+lib_lib=1
+
+sub draw_rectangle2(x,y,xx,yy,color,out)
+   brush_color(color)
+   pen_color(out)
+   draw_rectangle(x,y,xx,yy)
+end sub
+
+sub draw_line2(x,y,xx,yy,color)
+   pen_color(color)
+   draw_line(x,y,xx,yy)
+end sub
+
+sub draw_text2(x,y,color,string)
+   font_color(color)
+   draw_text(x,y,string)
+end sub
+
+function get_chr()
+key=get_key()
+  if key!=0 then
+    if key>0 then
+      if key<256 then
+        if key!=27 then
+          return(key)
+        end if
+      end if
+    end if
+  end if
+  return(0)
+end function
+
+function get_string(info,pos_x,pos_y)
+string=""
+pos1=pos_x
+width=string_width(info)
+pos_x+=width
+pos_x+=8
+x=pos_x
+xx=pos_x
+x+=1
+xx+=8
+y=pos_y
+y+=20
+num=1
+draw_text2(pos1,pos_y,-1,info)
+draw_line(x,y,xx,y)
+  while 1=1 do
+    key=get_chr()
+    if key>0 then
+      if key!=8 then
+      if key!=13 then
+      if key!=1 then
+        chr=string_chr(key)
+        string+=chr
+        draw_rectangle2(pos_x,pos_y,600,y,0,0)
+        draw_text2(pos1,pos_y,-1,info)
+        draw_text2(pos_x,pos_y,-1,string)
+        x+=8
+        xx+=8
+        draw_line2(x,y,xx,y,-1)
+      end if
+      end if
+      end if
+    end if
+    if key=13 then
+      len=string_length(string)
+      text=""
+      for i=1 to len do
+         text+=" "
+      end for
+      draw_rectangle2(pos1,pos_y,600,y,0,0)
+      draw_text2(pos_x,pos_y,-1,text)
+      draw_line2(x,y,xx,y,0)
+      return(string)
+    end if
+    if key=8 then
+      len=string_length(string)
+      if len>0 then
+        string=string_remove_chr(string,len)
+        draw_rectangle2(pos_x,pos_y,600,y,0,0)
+        draw_text2(pos1,pos_y,-1,info)
+        draw_text2(pos_x,pos_y,-1,string)
+        x-=8
+        xx-=8
+        draw_line2(x,y,xx,y,-1)
+      end if
+    end if
+  end while
+end function
+
+
+--------------------- Database Lib --------------------------------------
+-- new version of database lib version 0.1 is ready command list
+--
+-- db_open
+-- db_insert_row
+-- db_insert_colnum
+-- db_delete_row
+-- db_delete_colnum
+-- db_close
+--
+-- keep the database to 100 rows and 10 colnums for a fast database
+----- 
+-- the database lib has bin upgrade and is fatser
+-- the database lib is fast if data size is keep at 100 rows or lower
+-- to add 100 entese to a new database in one go will take 5 secends but
+-- to add 100 entese to a database with 100 enters will take 16 secends there
+-- times as the time for 100 to a new db
+------
+-- the database lib is very slow and can,t be speed up and so
+-- this programing language is no good for database programs but there is
+-- hope it can be builed into the program it self and that sured be fast a
+-- noth but in the mean time this lib wil be used it needs to be remade
+-- so you can have rows with as many colnums as you want at the monment
+-- you can have rows and thats all.
+-- there are two subs and two funtcion.
+-- db_open is a function and open a database or make a new database.
+-- db_open return 0 if database could not be created or opened
+-- db_open return 1 if a new database as bin created
+-- db_open return 2 if a exsiting database was opened
+-- db_insert is a sub and lets you insert new rows into your database.
+-- db_insert has two arguments arg1 is a name for the row. the name is use
+-- in insert sub. if a row with the name
+-- all ready exsist then that row data part is replaced by arg2
+-- the db_get_data is stright forward.
+-- the db_close sub must be used when you have done with that database or
+-- want to open a new one failing to do so and you will lose all the data
+-- that you have insert from when the database was opened
+
+database_name=""
+database_string[1]=""
+database_size=0
+database_key[1]=""
+global(database_size)
+global(database_key)
+global(database_name)
+global(database_string)
+
+function db_open(file_name5)
+stop=0
+len=0
+exe=0
+ -- file exetion right .db
+ len=string_length(file_name5)
+ if len>0 then
+   for i=1 to len do
+      chr=string_chr_at(file_name5,i)
+      if chr="." then
+        file_name5=string_copy(file_name5,1,i)
+        exe=1
+        exit(i)
+      end if
+   end for
+   if exe=0 then
+     file_name5+=".db"
+   end if
+   if exe=1 then
+     file_name5+="db"
+   end if
+ end if
+ -- if file is open or name length =0 then err
+ if len=0 then
+   return(0)
+ end if
+ database_name=file_name5
+ -- opening
+ exsist=file_exsist(file_name5)
+ if exsist=0 then
+  database_id=file_text_open_write(file_name5)
+  file_close(database_id)
+  return(1)
+ end if
+ if exsist=1 then
+  database_id=file_text_open_read(file_name5)
+  stop=eof(database_id)
+  while stop!=1 do
+    database_size+=1
+    database_string[database_size]=file_text_read_string(database_id)
+    len=string_length(database_string[database_size])
+    for j=1 to len do
+       chr=string_chr_at(database_string[database_size],j)
+       if chr=";" then
+         pos1=j
+         pos1-=1
+         string=string_copy(database_string[database_size],1,pos1)
+         database_key[database_size]=string
+         exit(j)
+       end if
+    end for
+    file_text_readln(database_id)
+    stop=eof(database_id)
+  end while
+  file_close(database_id)
+  return(2)
+ end if
+end function
+
+sub db_insert_row(row)
+find=0
+for i=1 to database_size do
+   if row=database_key[i] then
+     len=string_length(database_string[i])
+     for j=1 to len do
+       chr=string_chr_at(database_string[i],j)
+       if chr=";" then
+         pos1=j
+         database_string[i]=string_remove(database_string[i],pos1,len)
+         find=1
+         exit(j)
+       end if
+     end for
+   end if
+   if find=1 then
+     exit(i)
+   end if
+end for
+if find=0 then
+  database_size+=1
+  database_key[database_size]=row
+  database_string[database_size]=row
+  database_string[database_size]+=";"
+end if
+end sub
+
+sub db_insert_colnum(row,colnum,data)
+find=0
+for i=1 to database_size do
+   if row=database_key[i] then
+     len=string_length(database_string[i])
+     for j=1 to len do
+       chr=string_chr_at(database_string[i],j)
+       if chr=";" then
+         for k=1 to len do
+            chr=string_chr_at(database_string[i],k)
+            if chr="'" then
+              kk=k
+              kk+=1
+              for m=kk to len do
+                chr=string_chr_at(database_string[i],k)
+                if chr="'" then
+                  mm=m
+                  mm-=1
+                  temp=string_copy(database_string[i],kk,mm)
+                  draw_text(1,100,temp)
+                  sleep(1)
+                  if temp=colnum then
+                    for n=mm to len do
+                       chr=string_chr_at(database_string[i],n)
+                       if chr="^" then
+                         mm+=1
+                         nn=n
+                         nn-=1
+                         database_string[i]=string_remove(database_string[i],mm,nn)
+                         database_string[i]=string_insert(database_string[i],data,mm)
+                         exit(n)
+                       end if
+                    end for
+                    find=1
+                    exit(m)
+                  end if
+                end if
+               if find=1 then
+                 exit(m)
+               end if
+              end for
+             if find=1 then
+               exit(k)
+             end if
+            end if
+         end for
+        if find=1 then
+         exit(j)
+        end if
+       end if
+     end for
+   if find=1 then
+     exit(i)
+   end if
+   end if
+end for
+if find=0 then
+for i=1 to database_size do
+   if row=database_key[i] then
+     database_key[i]=row
+     database_string[i]+="'"
+     database_string[i]+=colnum
+     database_string[i]+="'"
+     database_string[i]+=data
+     database_string[i]+="^"
+   end if
+end for
+end if
+end sub
+
+function db_row_exsist(row)
+for i=1 to database_size do
+   if row=database_key[i] then
+     return(1)
+   end if
+end for
+return(0)
+end function
+
+function db_colnum_exsist(row,colnum)
+for i=1 to database_size do
+   if row=database_key[i] then
+     len=string_length(database_string[i])
+     for j=1 to len do
+       chr=string_chr_at(database_string[i],j)
+       if chr=";" then
+         for k=1 to len do
+            chr=string_chr_at(database_string[i],k)
+            if chr="'" then
+              kk=k
+              kk+=1
+              for m=kk to len do
+                chr=string_chr_at(database_string[i],k)
+                if chr="'" then
+                  mm=m
+                  mm-=1
+                  temp=string_copy(database_string[i],kk,mm)
+                  if temp=colnum then
+                    return(1)
+                  end if
+                end if
+              end for
+            end if
+         end for
+       end if
+     end for
+   end if
+end for
+return(0)
+end function
+
+function db_delete_row(row)
+find=0
+line=0
+for i=1 to database_size do
+   if row=database_key[i] then
+     find=1
+     line=i
+   end if
+   if find=1 then
+     exit(i)
+   end if
+end for
+if find=1 then
+num=0
+  for i=1 to database_size do
+     if i!=line then
+      num+=1
+      temp1[num]=database_string[i]
+      temp2[num]=database_key[i]
+     end if
+  end for
+  for i=1 to database_size do
+      database_string[i]=""
+      database_key[i]=""
+  end for
+  database_size-=1
+  for i=1 to num do
+      database_string[i]=temp1[i]
+      database_key[i]=temp2[i]
+  end for
+  return(1)
+end if
+return(0)
+end function
+
+function db_delete_colnum(row,colnum)
+find=0
+for i=1 to database_size do
+   if row=database_key[i] then
+     len=string_length(database_string[i])
+     for j=1 to len do
+       chr=string_chr_at(database_string[i],j)
+       if chr=";" then
+         for k=1 to len do
+            chr=string_chr_at(database_string[i],k)
+            if chr="'" then
+              kk=k
+              kk+=1
+              for m=kk to len do
+                chr=string_chr_at(database_string[i],k)
+                if chr="'" then
+                  mm=m
+                  mm-=1
+                  temp=string_copy(database_string[i],kk,mm)
+                  if temp=colnum then
+                    for n=mm to len do
+                       chr=string_chr_at(database_string[i],n)
+                       if chr="^" then
+                         mm+=1
+                         nn=n
+                         kk-=2
+                         --nn-=1
+                         database_string[i]=string_remove(database_string[i],kk,nn)
+                         find=1
+                         return(1)
+                       end if
+                    end for
+                  end if
+                end if
+              end for
+            end if
+         end for
+       end if
+     end for
+   if find=1 then
+     exit(i)
+   end if
+   end if
+end for
+return(0)
+end function
+
+function db_get_data(row,colnum)
+find=0
+for i=1 to database_size do
+   if row=database_key[i] then
+     len=string_length(database_string[i])
+     for j=1 to len do
+       chr=string_chr_at(database_string[i],j)
+       if chr=";" then
+         for k=1 to len do
+            chr=string_chr_at(database_string[i],k)
+            if chr="'" then
+              kk=k
+              kk+=1
+              for m=kk to len do
+                chr=string_chr_at(database_string[i],k)
+                if chr="'" then
+                  mm=m
+                  mm-=1
+                  temp=string_copy(database_string[i],kk,mm)
+                  if temp=colnum then
+                    for n=mm to len do
+                       chr=string_chr_at(database_string[i],n)
+                       if chr="^" then
+                         mm+=2
+                         nn=n
+                         nn-=1
+                         temp=string_copy(database_string[i],mm,nn)
+                         return(temp)
+                       end if
+                    end for
+                  end if
+                end if
+              end for
+            end if
+         end for
+       end if
+     end for
+   end if
+end for
+return("")
+end function
+
+sub db_close()
+len=string_length(database_name)
+   if len>0 then
+   database_id=file_text_open_write(database_name)
+   if database_size=0 then
+   database_size+=1
+   end if
+   for i=1 to database_size do
+     if i!=1 then
+     file_text_writeln(database_id)
+     end if
+     file_text_write_string(database_id,database_string[i])
+   end for
+   file_close(database_id)
+   end if
+   for i=1 to database_size do
+     database_string[i]=""
+     database_key[i]=""
+   end for
+database_name=""
+database_string[1]=""
+database_size=0
+database_key[1]=""
+end sub

@@ -1,0 +1,40 @@
+--friday 4 jan 200-20 12:43:37
+--version 0
+
+without type_check
+global atom key
+include engine.e
+screen2={}
+new_screen(-1)
+if graphics_mode(18) then
+end if
+
+atom button1
+button1=create_ex({"button","button1",82,158})
+atom button2
+button2=create_ex({"button","button2",175,158})
+
+procedure close2()
+  clear_screen()
+  abort(0)
+end procedure
+
+while 1 do
+key=get_key()
+if key!=-1 then
+  if key=27 then
+    if show_q("Do You Want To Exit","About Windows ")=1 then
+      close2()
+    end if
+  end if
+end if
+draw_screen()
+
+if on_click({"button",button1})=1 then
+
+end if
+if on_click({"button",button2})=1 then
+
+end if
+
+end while

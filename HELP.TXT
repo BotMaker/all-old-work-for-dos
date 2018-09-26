@@ -1,0 +1,241 @@
+                     sunday 4 september 2005 program started
+                            ----------------------
+                            day 1 www.ex zzz.ex
+                            ----------------------
+a new programing langwage its was made by gareth mc copyright 2005 gaz biware
+it was all in one day its not that usefull at the moment but it is very fast
+all the code is stall in var just onec load from a file so to speed thing
+up a bit sound crap i no.
+
+ok here are the commands
+
+add_var
+set_var
+plus_var
+min_var
+
+goto
+lable
+
+if_var
+if_key
+
+exit
+
+draw_var
+draw_text
+draw_line
+draw_rectangle
+bc
+fc
+cls
+
+load_pic
+draw_pic
+
+there not many i no but it is still eraly days yet
+ok here the main part leanr this and you mast it that is
+the goto command with the goto command and the lable command and the if_var
+command you can do just about all the stander things like makeing
+
+loop_unitl
+end loop
+
+for i=1 to 2 do
+end for
+
+while 1 do
+end while
+
+here is a exsample of a for loop so if you can emagen you coulde program some
+good shit if you want to
+
+add_var i 1
+add_var stop 10
+
+lable start_for_loop
+plus_var i 1
+if_var 1 i stop goto end
+goto start_for_loop
+
+lable end
+exit
+
+you can create integer varbals but not string varbls
+most commands can apecet varbls are not its up to you
+ok let me show you how to add your varbs to your program
+here it is
+
+add_var x 1
+
+you have just add varb x with value 1
+you can set it to a diffrent value if you want by useing the set_var command
+here it is
+
+set_var x 2
+
+you have just change verb x to value 2 but want if you wanted to add a varb
+to a varb you would have to use the plus_var command the varb plus command
+as two arguements arg1 has to be a varbs name so arg1 is x and arg2 can be a
+verb or a number you type
+here it is  two exsamplas
+
+add_var x = 1
+add_var move_left 4
+plus_var x move_left
+
+now x has the value 5
+here it is
+
+add_var x = 1
+plus_var x 9
+
+now x has the value 10 so now you might need takerway from a varb
+here it is
+
+min_var x 5
+----------------------
+to do list
+----------------------
+hard
+-----
+string system
+make string varbs posabal
+add string length
+add get string for keyborad
+might have to do i think so
+add if_var_string
+add plus_var_string
+add add_var
+add set_var
+4if string system is done then can add
+add data
+add file_write
+add file_read
+and so on
+------
+esay er
+------
+add wait key prees
+add get number for keyboard
+add sleep
+add draw_pixal
+add draw_cicral
+                            ------------------------
+                            day 2 zzz.ex zz1.ex 
+                            ------------------------
+ok it has bin a bit of time i have add the posalbilty to use string varbs in
+your program i thinking of adding 2d arrys to this because it would be much
+beter programing landwarg i think i might give it a go now bye
+i have just add the 2d array but i will say this it work good but there is
+no err cheeking on it so if your program crashers then you wont no why
+i can make a err system for 2d arrays but it will take some time so i will
+levea it. i have only add support for 2d array with varbs at the monement i
+ham thinking of makeing a 2d array system for string. i dont no what to do
+now sorey i have not made a 2d array system it is a 1d array sytem 
+i have just add the 1d string system so now we have a fulliy functioning
+program langwagug with all varbs integer and string and 1d array varbs
+so it works now i need to finsh it of that is the 1d array system
+
+ok i have done 1d array system it work fine thinking of changeing the
+set_var plus_var min_var times_var commands in to one command and with the
+string system and the arrays systems to make thing more simpler
+noy yet low i think a nover day or two i will do it because i do need that
+doing 
+
+just fix bugs in the 1d array system there where lose of then neahrly all
+of it a to be rewriten its gone frew a lot of test and it works fine now
+i need to test the program for moor bugs be for doing any thing else to it
+program tested results good every thing is a ok
+at the monment this programing lanlgwa is good but work needs to be started
+on draw system and string function and input system. you cant make much at
+the moment i dont think but it is still quirte celver
+
+i have just made a program in my programing language it is this input string
+fing you are asked to enter you name and then
+to enter your age. you can use the arrow keys to move left and right and the
+back space key and del key to delete a chr in string its made all in the
+programing langwag its about 125 lines long it use the string remove command
+and the string insert command iam thinking i might be able to make a text
+editer but i will need to add commands read and write file to do so i will
+try to make it sone 
+
+it has got 37 commnads in toltil most of which are for var init and changs
+so if you could make a command system read from a file and then intepe it
+a=1 to add_var if var dose not exsists or set var if dose exits if i could
+do this i think i would have a great program here thats not to say i dont
+think its great basicly i mean make santkars for my programs
+
+----------------------------------------------------------------------------
+     inportint information here
+----------------------------------------------------------------------------
+the programing langwiga as came a long way so far and it still as not got
+a name for it so iam going to ask peopel for a name so i hope with the next
+day it will have a name
+-------------------------
+to do list
+-------------------------
+---------
+hard
+---------
+i need to make a 2d var sytem
+i need to add command string copy
+i need to make a text editer to prove to my self that this langwage is good
+--------
+esay
+--------
+add commands draw command about 4 to do
+
+                     -----------------------
+                        day 3 zz1.ex
+                     -----------------------
+
+ok i must say this the file zz1 as just reched 1000 lines iam pleses with
+it but the the line count couled change
+
+ok i have just made a new file its call systek.ex it interpets a=1 in to
+commands that the programing langwag will understand at the monument it can
+only interpit integer varbs basicly what that menans is it will interpit
+a=1 or a=b it can not do string varbs our arrays varbs. at the monument
+its not that cleaver because the systek has to be one way so say that
+you type in this a = 1 it will not work so you have to type in a=1 for it
+to work but it is claver in this sence say you type in a=1 and agina on a
+diffrent line it would no that you are not add the var you are seting it to
+a value and that value can all so be a varb so it is cleaver but iam not sure
+how cleaver i can make it at the monument so iam going to be writeing it for
+a while i think so bye for now i still here i dont no what to do now i have
+noy open the zz1.ex file today i thimk trying to do two thing at one is to
+hard so iam going to have to make a chours if to make systek.ex or zz1.ex
+iam thinking of makeing zz1.ex i need to add loads moor commands and make
+then all accept integer & string varbs and arrays and then my program should
+be powerfull a noth so i can started work on systek.ex thats the plan i
+think its the best ider or i can leave file zz1.ex how it is 
+
+
+ a list of all commands
+-----------
+var system
+-----------
+add_var set_var plus_var min_var if_var times_var
+add_string set_string plus_string if_string
+add_var_array  set_ver_array plus_var_array min_var_array
+add_string_array set_string_array 
+-------------
+input system
+-------------
+if_key key_wait keyborad_string get_key
+------------
+draw system
+------------
+draw_string draw_var draw_line draw_rectangle 
+bc fc cls
+----------------
+string function
+----------------
+if_string_char string_length insert_string string_remove
+--------------
+main system
+--------------
+goto
+lable
+exit

@@ -1,0 +1,239 @@
+-- This program is a simple exsample program made by gareth mc daid
+-- command list
+--
+-- draw commands
+-- draw_pixel draw_line draw_rectangle draw_cir draw_string draw_number
+-- get_pixel cls bk_color font_color draw_pic load_pic (12)
+--
+-- mise commands
+-- the string function will turn a number into a string
+-- the number function will turn a string into a number
+-- the abort command will exit the program
+-- the get_key function will set a number to a key code when a key is pressed
+-- the beep command make a sound on the computer speaker
+-- the date command tells you the date and 123 is date 456 is the time
+-- the time command will return a fix time for when the program stared
+-- the graphic_mode command changs the graphic mode (8)
+-- the if satement can have these checks = != < > <= >=
+-- the while satement can have these checks =  --needs != < > <= >=
+--
+-- file commands
+-- file_open_read file_open_write file_close file_exsist
+-- file_read_string file_read_number file_readln file_read_length
+-- file_write_string file_write_number file_writeln file_open_append (12)
+--
+-- string commands
+-- string_copy string_chr_at string_insert string_remove_chr
+-- string_length string_chr (6)
+--(38)
+--
+number%=0
+number%=time()
+text$=""
+can%=1
+chr1%=0
+key_text$=""
+key%=0
+length%=0
+x%=1
+xx%=8
+name$=""
+age$=""
+mode%=0
+y%=40
+yy%=20
+yyy%=20
+idd%=0
+time%=0
+line%=0
+--
+graphic_mode(2)
+font_color(-1)
+bk_color(1)
+cls()
+draw_string(1,1,1,"Enter Name ")
+draw_line(x%,y%,xx%,y%,-1)
+--
+while can%=1
+key%=get_key()
+-- if key is a good key then insert it to string 
+if key%!=0
+  if key%>2
+    if key%<256
+      if key%!=331
+        if key%!=333
+          if key%!=8
+            if key%!=13
+              if key%!=339
+                key_text$=string_chr(key%)
+                text$=string_insert(text$,key_text$,chr1%)
+                chr1%+=1
+                draw_rectangle(1,yyy%,600,y%,0,1)
+                x%+=8
+                xx%+=8
+                draw_line(x%,y%,xx%,y%,-1)
+                draw_string(1,yy%,1,text$)
+                length%=string_length(text$)
+              end_if
+            end_if
+          end_if
+        end_if
+      end_if
+    end_if
+  end_if
+end_if
+-- if arrow key left is preesed move
+if key%=331
+  if chr1%!=0
+    chr1%-=1
+    x%-=8
+    xx%-=8
+    draw_rectangle(1,yyy%,600,y%,0,1)
+    draw_line(x%,y%,xx%,y%,-1)
+    draw_string(1,yy%,1,text$)
+  end_if
+end_if
+-- if arrow key right is preesed move
+if key%=333
+  if chr1%!=length%
+    chr1%+=1
+    x%+=8
+    xx%+=8
+    draw_rectangle(1,yyy%,600,y%,0,1)
+    draw_line(x%,y%,xx%,y%,-1)
+    draw_string(1,yy%,1,text$)
+  end_if
+end_if
+-- if back space key is pressed then delete
+if key%=8 then
+  if chr1%!=0
+    text$=string_remove_chr(text$,chr1%)
+    chr1%-=1
+    x%-=8
+    xx%-=8
+    length%=string_length(text$)
+    draw_rectangle(1,yyy%,600,y%,0,1)
+    draw_line(x%,y%,xx%,y%,-1)
+    draw_string(1,yy%,1,text$)
+  end_if
+end_if
+-- if enter key is pressed
+if key%=13
+  if mode%=0
+    name$=text$
+    draw_rectangle(1,1,600,18,0,1)
+    draw_string(1,1,1,"Enter Age")
+  end_if
+  if mode%=1
+    age$=text$
+    draw_rectangle(1,1,600,18,0,1)
+    draw_string(1,1,1,"Enter Data Of Brith")
+  end_if
+  if mode%=2
+    cls()
+    draw_string(1,1,1,"Name")
+    draw_string(1,20,1,"Age")
+    draw_string(1,40,1,"Date Of Brith")
+    draw_string(50,1,1,name$)
+    draw_string(50,20,1,age$)
+    draw_string(120,40,1,text$)
+    length%=string_length(name$)
+    if length%>0
+      idd%=file_open_append("data.gaz")
+      file_write_string(idd%,name$)
+      file_writeln(idd%)
+      file_write_string(idd%,age$)
+      file_writeln(idd%)
+      file_write_string(idd%,text$)
+      file_writeln(idd%)
+      file_writeln(idd%)
+      file_close(idd%)
+    end_if
+    can%=0
+  end_if
+  if can%=1
+    mode%+=1
+    draw_line(x%,y%,xx%,y%,0)
+    text$=""
+    chr1%=0
+    x%=1
+    xx%=8
+    length%=0
+    y%+=20
+    yy%+=20
+    yyy%+=20
+    draw_line(x%,y%,xx%,y%,-1)
+  end_if
+end_if
+end_while
+--
+while can%=0
+time%+=1
+if time%>10000
+  beep()
+  can%=1
+end_if
+end_while
+--
+cls()
+idd%=0
+length%=0
+y%=1
+exsist%=0
+exsist%=file_exsist("data.gaz")
+if exsist%=1
+idd%=file_open_read("data.gaz")
+length%=file_read_length(idd%)
+--
+while can%=1
+line%+=1
+text$=file_read_string(idd%)
+file_readln(idd%)
+if text$!=" "
+draw_string(1,y%,1,text$)
+y%+=20
+end_if
+if line%=length%
+  can%=0
+  file_close(idd%)
+end_if
+end_while
+end_if
+--
+draw_string(300,1,1,"hit esc key to exit")
+sec%=0
+min%=0
+hour%=0
+temp%=0
+can%=0
+pic%=0
+pic2%=0
+pic%=load_pic("grass.BMP")
+draw_pic(pic%,100,200)
+draw_pic(pic%,200,200)
+pic2%=load_pic("tree.BMP")
+draw_pic(pic2%,300,200)
+draw_pic(pic2%,400,200)
+--
+while can%=0
+sec%=date(6)
+if sec%!=temp%
+sec%=date(6)
+min%=date(5)
+hour%=date(4)
+draw_string(300,20,1,"  ")
+draw_number(300,20,1,hour%)
+draw_string(320,20,1,"  ")
+draw_number(320,20,1,min%)
+draw_string(340,20,1,"  ")
+draw_number(340,20,1,sec%)
+temp%=sec%
+end_if
+key%=get_key()
+if key%=27
+  bk_color(0)
+  cls()
+  number%=time()
+  abort()
+end_if
+end_while

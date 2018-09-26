@@ -1,0 +1,305 @@
+-- this lib file is used so to exstend the program it self
+-- this lib_lib varaible is not need but if not where it is now program will crash
+lib_lib=1
+--
+-- drawing lib
+sub draw_rectangle2(x,y,xx,yy,color,out)
+   brush_color(color)
+   pen_color(out)
+   draw_rectangle(x,y,xx,yy)
+end sub
+
+sub draw_line2(x,y,xx,yy,color)
+   pen_color(color)
+   draw_line(x,y,xx,yy)
+end sub
+
+sub draw_text2(x,y,color,string)
+   font_color(color)
+   draw_text(x,y,string)
+end sub
+--end drawing lib
+
+--database lib
+--global varbs
+database_name=""
+database_string[1]=""
+database_size=0
+global(database_size)
+global(database_name)
+global(database_string)
+--
+
+function db_open(name)
+stop=0
+len=0
+exe=0
+ -- file exetion right gaz
+ len=string_length(name)
+ if len>0 then
+   for i=1 to len do
+      chr=string_chr_at(name,i)
+      if chr="." then
+        name=string_copy(name,1,i)
+        exe=1
+        exit(i)
+      end if
+   end for
+   if exe=0 then
+     name+=".db"
+   end if
+   if exe=1 then
+     name+="db"
+   end if
+ end if
+ -- if file is open or name length =0 then err
+ if len=0 then
+   return(0)
+ end if
+ database_name=name
+ -- opening
+ exsist=file_exsist(name)
+ if exsist=0 then
+  database_id=file_text_open_write(name)
+  file_close(database_id)
+  return(1)
+ end if
+ if exsist=1 then
+  database_id=file_text_open_read(name)
+  stop=eof(database_id)
+  while stop!=1 do
+    database_size+=1
+    database_string[database_size]=file_text_read_string(database_id)
+    file_text_readln(database_id)
+    stop=eof(database_id)
+  end while
+  file_close(database_id)
+  return(2)
+ end if
+end function
+
+sub db_insert(key,string3)
+-- checking to see if key exsist if it dose then replace it
+gaz=0
+  len=string_length(database_string[1])
+  line=1
+  can=1
+  temp=1
+  find=0
+
+if gaz=1 then
+  if len>0 then
+  while can=1 do
+  for i=line to len do
+     chr=string_chr_at(database_string[1],i)
+     if chr=";" then
+       ii=i
+       ii+=1
+       for j=ii to len do
+          chr=string_chr_at(database_string[1],j)
+          if chr=";" then
+            pos1=i
+            pos1+=1
+            pos2=j
+            pos2-=1
+            string=string_copy(database_string[1],pos1,pos2)
+            -- key found
+            if string=key then
+              for k=j to len do
+                chr=string_chr_at(database_string[1],k)
+                if chr="^" then
+                  pos1=j
+                  pos1+=1
+                  pos2=k
+                  pos2-=1
+                  for l=pos1 to pos2 do
+                    database_string[1]=string_remove_chr(database_string[1],pos1)
+                  end for
+                  find=1
+                  pos1-=1
+                  database_string[1]=string_insert(database_string[1],string3,pos1)
+                  can=0
+                  exit(k)
+                end if
+              end for
+            end if
+            --
+            for k=j to len do
+              chr=string_chr_at(database_string[1],k)
+              if chr="^" then
+                line=k
+                exit(k)
+              end if
+            end for
+            exit(j)
+          end if
+       end for
+     end if
+     if temp!=line then
+       temp=line
+       exit(i)
+     end if
+  end for
+  if line=len then
+    can=0
+  end if
+  end while
+  end if
+end if
+-- if key dose not exsist add it to the database
+if find=0 then
+   database_string[1]+=";"
+   database_string[1]+=key
+   database_string[1]+=";"
+   database_string[1]+=string3
+   database_string[1]+="^"
+end if
+end sub
+
+function db_get_data(key)
+len=string_length(database_string[1])
+line=1
+can=1
+temp=line
+if len>0 then
+while can=1 do
+  for i=line to len do
+     chr=string_chr_at(database_string[1],i)
+     if chr=";" then
+       ii=i
+       ii+=1
+       for j=ii to len do
+          chr=string_chr_at(database_string[1],j)
+          if chr=";" then
+            pos1=i
+            pos1+=1
+            pos2=j
+            pos2-=1
+            string=string_copy(database_string[1],pos1,pos2)
+            -- key found
+            if string=key then
+              for k=j to len do
+                chr=string_chr_at(database_string[1],k)
+                if chr="^" then
+                  pos1=j
+                  pos1+=1
+                  pos2=k
+                  pos2-=1
+                  string=string_copy(database_string[1],pos1,pos2)
+                  return(string)
+                end if
+              end for
+            end if
+            --
+            for k=j to len do
+              chr=string_chr_at(database_string[1],k)
+              if chr="^" then
+                line=k
+                exit(k)
+              end if
+            end for
+            exit(j)
+          end if
+       end for
+     end if
+     if temp!=line then
+       temp=line
+       exit(i)
+     end if
+  end for
+if line=len then
+  can=0
+end if
+end while
+end if
+return("")
+end function
+
+sub db_close()
+len=string_length(database_name)
+   if len>0 then
+   database_id=file_text_open_write(database_name)
+   if database_size=0 then
+   database_size+=1
+   end if
+   for i=1 to database_size do
+     file_text_write_string(database_id,database_string[i])
+     file_text_writeln(database_id)
+   end for
+   file_close(database_id)
+   end if
+end sub
+
+--end database lib
+
+function get_chr()
+key=get_key()
+  if key!=0 then
+    if key>0 then
+      if key<256 then
+        if key!=27 then
+          return(key)
+        end if
+      end if
+    end if
+  end if
+  return(0)
+end function
+
+function get_string(info,pos_x,pos_y)
+string=""
+pos1=pos_x
+width=string_width(info)
+pos_x+=width
+pos_x+=8
+x=pos_x
+xx=pos_x
+x+=1
+xx+=8
+y=pos_y
+y+=20
+num=1
+draw_text2(pos1,pos_y,-1,info)
+draw_line(x,y,xx,y)
+  while 1=1 do
+    key=get_chr()
+    if key>0 then
+      if key!=8 then
+      if key!=13 then
+      if key!=1 then
+        chr=string_chr(key)
+        string+=chr
+        draw_rectangle2(pos_x,pos_y,600,y,0,0)
+        draw_text2(pos1,pos_y,-1,info)
+        draw_text2(pos_x,pos_y,-1,string)
+        x+=8
+        xx+=8
+        draw_line2(x,y,xx,y,-1)
+      end if
+      end if
+      end if
+    end if
+    if key=13 then
+      len=string_length(string)
+      text=""
+      for i=1 to len do
+         text+=" "
+      end for
+      draw_text2(pos_x,pos_y,-1,text)
+      draw_line2(x,y,xx,y,-1)
+      return(string)
+    end if
+    if key=8 then
+      len=string_length(string)
+      if len>0 then
+        string=string_remove_chr(string,len)
+        draw_rectangle2(pos_x,pos_y,600,y,0,0)
+        draw_text2(pos1,pos_y,-1,info)
+        draw_text2(pos_x,pos_y,-1,string)
+        x-=8
+        xx-=8
+        draw_line2(x,y,xx,y,-1)
+      end if
+    end if
+  end while
+end function

@@ -1,0 +1,436 @@
+info_set lib_lib 1 
+sub draw_rectangle2 x y xx yy color out 
+brush_color color 
+pen_color out 
+draw_rectangle x y xx yy 
+e n d _ s u b 
+sub draw_line2 x y xx yy color 
+pen_color color 
+draw_line x y xx yy 
+e n d _ s u b 
+sub draw_text2 x y color string 
+font_color color 
+draw_text x y string 
+e n d _ s u b 
+fun get_chr  
+get_key key  
+if key 0  
+if key 0  
+if key 256  
+if key 27  
+return key 
+e n d _ i f 
+e n d _ i f 
+e n d _ i f 
+e n d _ i f 
+return 0 
+e n d _ f u n 
+fun get_string info pos_x pos_y 
+info_set string "" 
+info_set pos1 pos_x 
+string_width width info 
+info_plus pos_x width 
+info_plus pos_x 8 
+info_set x pos_x 
+info_set xx pos_x 
+info_plus x 1 
+info_plus xx 8 
+info_set y pos_y 
+info_plus y 20 
+info_set num 1 
+draw_text2 pos1 pos_y -1 info 
+draw_line x y xx y 
+while 1 1  
+get_chr key  
+if key 0  
+if key 8  
+if key 13  
+if key 1  
+string_chr chr key 
+info_plus string chr 
+draw_rectangle2 pos_x pos_y 600 y 0 0 
+draw_text2 pos1 pos_y -1 info 
+draw_text2 pos_x pos_y -1 string 
+info_plus x 8 
+info_plus xx 8 
+draw_line2 x y xx y -1 
+e n d _ i f 
+e n d _ i f 
+e n d _ i f 
+e n d _ i f 
+if key 13  
+string_length len string 
+info_set text "" 
+for i 1 len 
+info_plus text " " 
+e n d _ f o r 
+draw_rectangle2 pos1 pos_y 600 y 0 0 
+draw_text2 pos_x pos_y -1 text 
+draw_line2 x y xx y 0 
+return string 
+e n d _ i f 
+if key 8  
+string_length len string 
+if len 0  
+string_remove_chr string string len 
+draw_rectangle2 pos_x pos_y 600 y 0 0 
+draw_text2 pos1 pos_y -1 info 
+draw_text2 pos_x pos_y -1 string 
+info_min x 8 
+info_min xx 8 
+draw_line2 x y xx y -1 
+e n d _ i f 
+e n d _ i f 
+e n d _ w h i l e 
+e n d _ f u n 
+info_set database_name "" 
+info_set_array database_string 1 "" 
+info_set database_size 0 
+info_set_array database_key 1 "" 
+global database_size 
+global database_key 
+global database_name 
+global database_string 
+fun db_open file_name5 
+info_set stop 0 
+info_set len 0 
+info_set exe 0 
+string_length len file_name5 
+if len 0  
+for i 1 len 
+string_chr_at chr file_name5 i 
+if chr "."  
+string_copy file_name5 file_name5 1 i 
+info_set exe 1 
+exit i 
+e n d _ i f 
+e n d _ f o r 
+if exe 0  
+info_plus file_name5 ".db" 
+e n d _ i f 
+if exe 1  
+info_plus file_name5 "db" 
+e n d _ i f 
+e n d _ i f 
+if len 0  
+return 0 
+e n d _ i f 
+info_set database_name file_name5 
+file_exsist exsist file_name5 
+if exsist 0  
+file_text_open_write database_id file_name5 
+file_close database_id 
+return 1 
+e n d _ i f 
+if exsist 1  
+file_text_open_read database_id file_name5 
+eof stop database_id 
+while stop 1  
+info_plus database_size 1 
+file_text_read_string database_string[database_size] database_id 
+string_length len database_string[database_size] 
+for j 1 len 
+string_chr_at chr database_string[database_size] j 
+if chr ";"  
+info_set pos1 j 
+info_min pos1 1 
+string_copy string database_string[database_size] 1 pos1 
+info_set_array database_key database_size string  
+exit j 
+e n d _ i f 
+e n d _ f o r 
+file_text_readln database_id 
+eof stop database_id 
+e n d _ w h i l e 
+file_close database_id 
+return 2 
+e n d _ i f 
+e n d _ f u n 
+sub db_insert_row row 
+info_set find 0 
+for i 1 database_size 
+if row database_key[i]  
+string_length len database_string[i] 
+for j 1 len 
+string_chr_at chr database_string[i] j 
+if chr ";"  
+info_set pos1 j 
+string_remove database_string[i] database_string[i] pos1 len 
+info_set find 1 
+exit j 
+e n d _ i f 
+e n d _ f o r 
+e n d _ i f 
+if find 1  
+exit i 
+e n d _ i f 
+e n d _ f o r 
+if find 0  
+info_plus database_size 1 
+info_set_array database_key database_size row  
+info_set_array database_string database_size row  
+info_plus_array database_string database_size ";" 
+e n d _ i f 
+e n d _ s u b 
+sub db_insert_colnum row colnum data 
+info_set find 0 
+for i 1 database_size 
+if row database_key[i]  
+string_length len database_string[i] 
+for j 1 len 
+string_chr_at chr database_string[i] j 
+if chr ";"  
+for k 1 len 
+string_chr_at chr database_string[i] k 
+if chr "'"  
+info_set kk k 
+info_plus kk 1 
+for m kk len 
+string_chr_at chr database_string[i] k 
+if chr "'"  
+info_set mm m 
+info_min mm 1 
+string_copy temp database_string[i] kk mm 
+draw_text 1 100 temp 
+sleep 1 
+if temp colnum  
+for n mm len 
+string_chr_at chr database_string[i] n 
+if chr "^"  
+info_plus mm 1 
+info_set nn n 
+info_min nn 1 
+string_remove database_string[i] database_string[i] mm nn 
+string_insert database_string[i] database_string[i] data mm 
+exit n 
+e n d _ i f 
+e n d _ f o r 
+info_set find 1 
+exit m 
+e n d _ i f 
+e n d _ i f 
+if find 1  
+exit m 
+e n d _ i f 
+e n d _ f o r 
+if find 1  
+exit k 
+e n d _ i f 
+e n d _ i f 
+e n d _ f o r 
+if find 1  
+exit j 
+e n d _ i f 
+e n d _ i f 
+e n d _ f o r 
+if find 1  
+exit i 
+e n d _ i f 
+e n d _ i f 
+e n d _ f o r 
+if find 0  
+for i 1 database_size 
+if row database_key[i]  
+info_set_array database_key i row  
+info_plus_array database_string i "'" 
+info_plus_array database_string i colnum  
+info_plus_array database_string i "'" 
+info_plus_array database_string i data  
+info_plus_array database_string i "^" 
+e n d _ i f 
+e n d _ f o r 
+e n d _ i f 
+e n d _ s u b 
+fun db_row_exsist row 
+for i 1 database_size 
+if row database_key[i]  
+return 1 
+e n d _ i f 
+e n d _ f o r 
+return 0 
+e n d _ f u n 
+fun db_colnum_exsist row colnum 
+for i 1 database_size 
+if row database_key[i]  
+string_length len database_string[i] 
+for j 1 len 
+string_chr_at chr database_string[i] j 
+if chr ";"  
+for k 1 len 
+string_chr_at chr database_string[i] k 
+if chr "'"  
+info_set kk k 
+info_plus kk 1 
+for m kk len 
+string_chr_at chr database_string[i] k 
+if chr "'"  
+info_set mm m 
+info_min mm 1 
+string_copy temp database_string[i] kk mm 
+if temp colnum  
+return 1 
+e n d _ i f 
+e n d _ i f 
+e n d _ f o r 
+e n d _ i f 
+e n d _ f o r 
+e n d _ i f 
+e n d _ f o r 
+e n d _ i f 
+e n d _ f o r 
+return 0 
+e n d _ f u n 
+fun db_delete_row row 
+info_set find 0 
+info_set line 0 
+for i 1 database_size 
+if row database_key[i]  
+info_set find 1 
+info_set line i 
+e n d _ i f 
+if find 1  
+exit i 
+e n d _ i f 
+e n d _ f o r 
+if find 1  
+info_set num 0 
+for i 1 database_size 
+if i line  
+info_plus num 1 
+info_set_array temp1 num database_string[i] 
+info_set_array temp2 num database_key[i] 
+e n d _ i f 
+e n d _ f o r 
+for i 1 database_size 
+info_set_array database_string i "" 
+info_set_array database_key i "" 
+e n d _ f o r 
+info_min database_size 1 
+for i 1 num 
+info_set_array database_string i temp1[i] 
+info_set_array database_key i temp2[i] 
+e n d _ f o r 
+return 1 
+e n d _ i f 
+return 0 
+e n d _ f u n 
+fun db_delete_colnum row colnum 
+info_set find 0 
+for i 1 database_size 
+if row database_key[i]  
+string_length len database_string[i] 
+for j 1 len 
+string_chr_at chr database_string[i] j 
+if chr ";"  
+for k 1 len 
+string_chr_at chr database_string[i] k 
+if chr "'"  
+info_set kk k 
+info_plus kk 1 
+for m kk len 
+string_chr_at chr database_string[i] k 
+if chr "'"  
+info_set mm m 
+info_min mm 1 
+string_copy temp database_string[i] kk mm 
+if temp colnum  
+for n mm len 
+string_chr_at chr database_string[i] n 
+if chr "^"  
+info_plus mm 1 
+info_set nn n 
+info_min kk 2 
+string_remove database_string[i] database_string[i] kk nn 
+info_set find 1 
+return 1 
+e n d _ i f 
+e n d _ f o r 
+e n d _ i f 
+e n d _ i f 
+e n d _ f o r 
+e n d _ i f 
+e n d _ f o r 
+e n d _ i f 
+e n d _ f o r 
+if find 1  
+exit i 
+e n d _ i f 
+e n d _ i f 
+e n d _ f o r 
+return 0 
+e n d _ f u n 
+fun db_get_data row colnum 
+info_set find 0 
+for i 1 database_size 
+if row database_key[i]  
+string_length len database_string[i] 
+for j 1 len 
+string_chr_at chr database_string[i] j 
+if chr ";"  
+for k 1 len 
+string_chr_at chr database_string[i] k 
+if chr "'"  
+info_set kk k 
+info_plus kk 1 
+for m kk len 
+string_chr_at chr database_string[i] k 
+if chr "'"  
+info_set mm m 
+info_min mm 1 
+string_copy temp database_string[i] kk mm 
+if temp colnum  
+for n mm len 
+string_chr_at chr database_string[i] n 
+if chr "^"  
+info_plus mm 2 
+info_set nn n 
+info_min nn 1 
+string_copy temp database_string[i] mm nn 
+return temp 
+e n d _ i f 
+e n d _ f o r 
+e n d _ i f 
+e n d _ i f 
+e n d _ f o r 
+e n d _ i f 
+e n d _ f o r 
+e n d _ i f 
+e n d _ f o r 
+e n d _ i f 
+e n d _ f o r 
+return "" 
+e n d _ f u n 
+sub db_close  
+string_length len database_name 
+if len 0  
+file_text_open_write database_id database_name 
+if database_size 0  
+info_plus database_size 1 
+e n d _ i f 
+for i 1 database_size 
+if i 1  
+file_text_writeln database_id 
+e n d _ i f 
+file_text_write_string database_id database_string[i] 
+e n d _ f o r 
+file_close database_id 
+e n d _ i f 
+for i 1 database_size 
+info_set_array database_string i "" 
+info_set_array database_key i "" 
+e n d _ f o r 
+info_set database_name "" 
+info_set_array database_string 1 "" 
+info_set database_size 0 
+info_set_array database_key 1 "" 
+e n d _ s u b 
+graphics_mode 3 
+fun get_command string 
+string_length len string 
+for i 1 len 
+string_chr_at chr string i 
+if chr "-"  
+info_set ii i 
+info_plus ii 1 
+string_chr_at chr string ii 
+if chr "-"  

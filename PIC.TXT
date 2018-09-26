@@ -1,0 +1,64 @@
+ok iam being to think a new picture file format is going to be a good ider
+because i have been programing in euohoria for so long i have seen a lot of
+programs that have sepret picture files all of or most of these are the bmp
+type format and with this file format has a lot of problems one of wich is
+the fact that every picture has to be save on disk by it self you have no
+way of doing transpants on the picturs or anamations and you can't keep all
+of your files in one file and you sently can't open that one file and edit
+the pictures in a drawing program its just not been done so iam thinking
+that programers would realy like a esay way to do this and i think i can
+acive this so iam going to make it for the euphoria programing world.
+i will have to make all of this in windows it will take to long in dos
+because dos in limiting in meay ways one of wich is the fact that you can
+only 256 colours.
+
+i have made some of the drawing program in dos and think it will be so
+much esay in windows because you can use the graphic user interface
+that windows has builted into it self and there 24 bit colours and that is
+the target platform for my drawing program and my picture file format
+ther is one moor thing i would like to add to my picture file format and that
+is colour blending like vector images use if i can include colour blending
+and get it to work to a good stander then my file format will be use by
+the euphoria programing comuituy for sure and my drawing program and maybe
+the outside world to but if my file format fails then i will have to say i
+didn't tell you so i think it will take off like a rocket onec it has been
+noteis for what it is
+
+my picture file format is going to be huge in the euphoria programing world
+iam going to get everone wohs programs in euphoria usesing my picture format
+the picture format is going to able to do colour blending this means that
+if you have a picture with a width and height of 32 and you want to zoom
+in on the picture you can and the picture quitly will look has good has it
+did befor when you zoom in on it by the way when we zoom in on the picture the
+width and height was 100 you could zoom in has much as you like without lost
+of quitly the format all so able to do anamtions this means you can stroe has
+many pictures in one file so long has they all have the same width and height
+thers even transprants settings that can be used on your picture it has 24 bit
+color and the file can be comprees so you can acvied very small file sizes
+ok some of you might want to store all of your pictures into one file this
+can be acvide has well its very simple you frist have to find the files you
+want to be put in one file and then give the name of the file thats going
+to have all the files put into and thats.
+
+i no i can have 24 bit colours and anamtion and transpants and comprestion
+but the colour blending iam not sure of i have to make it frist and well i no
+i can make it but if it will work like i want it to i don't no
+
+i still need to make a program thats going to be able to create these picture
+images i have got a dos drawing program that can creat and edit this picture
+format but the format has not been completed i mean that the way this format
+works has not yet been desied on i realy want to make a windows drawing
+program and from there work out how the file format is going to work because
+there a lot of diffenc between dos and windows this will not take long once
+i have windows if i can make a relay cool drawing program i will be happy
+this program is going to have some way of haveing will i don't fucking no
+
+when i was programing in windows i learn a lot and i no there is
+all so a picture format that has no drawing program to go with it
+the picture format that iam talking about is to do with the toolbar that
+so many programs use it would be cool to make a program that can edit and
+create these pictures it would be very esay to make a drawing program that
+could do all of this and i might need a program like this
+i could all so make a drawing program for editing windows icons
+i could all so make a program that can edit all of these pictures formats
+bitmaps gif icons toolbar and my very own format

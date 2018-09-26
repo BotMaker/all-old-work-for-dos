@@ -1,0 +1,120 @@
+add_string text a 
+add_string string a   
+add_string info Enter_name
+add_string name  
+add_string age    
+add_var time 0
+add_var chr1 0
+add_var key 1
+add_var size 0
+add_var length 0
+add_var x 96
+add_var xx 104
+add_var chr2 0
+goto draw
+
+lable main
+wait_key
+string_length string length
+set_string text  
+get_key key
+if_var 1 key 331 key_left
+if_var 1 key 333 key_right
+if_var 1 key 8 back_space
+if_var 1 key 339 del_chr
+if_var 1 key 13 enter_string
+keyborad_string text
+string_length text size
+if_var 1 size 1 insert
+goto main
+
+lable key_left
+if_var 3 chr1 1 move_left
+goto main
+
+lable move_left
+min_var chr1 1
+min_var x 8
+min_var xx 8
+goto draw
+
+lable key_right
+if_var 6 chr1 length move_right
+goto main
+
+lable move_right
+plus_var chr1 1
+plus_var x 8
+plus_var xx 8
+goto draw
+
+lable back_space
+if_var 3 chr1 1 back
+goto draw
+
+lable del_chr
+if_var 3 chr1 0 del
+goto draw
+
+lable back
+string_remove string chr1 string
+goto move_left
+
+lable del
+set_var chr2 chr1
+plus_var chr2 1
+string_remove string chr2 string
+goto draw
+
+lable enter_string
+plus_var time 1
+if_var 1 time 1 enter_name
+if_var 1 time 2 enter_age
+goto draw
+
+lable enter_name
+set_string name string
+set_string string a
+set_string info enter_age 
+set_var chr1 0
+set_var size 0
+set_var length 0
+set_var x 96
+set_var xx 104
+set_var chr2 0
+goto draw
+
+lable enter_age
+set_string age string
+set_string string a
+set_string info done 
+set_var chr1 0
+set_var size 0
+set_var length 0
+set_var x 96
+set_var xx 104
+set_var chr2 0
+goto draw2
+
+lable insert
+cls
+string_insert string chr1 text string
+plus_var chr1 1
+draw_string 1 1 string
+plus_var x 8
+plus_var xx 8
+goto draw
+
+lable draw
+cls
+draw_line x 25 xx 25 7
+draw_string 1 1 info
+draw_string 13 1 string
+goto main
+
+lable draw2
+cls
+draw_string 1 1 name?
+draw_string 1 2 age?
+draw_string 8 1 name
+draw_string 8 2 age

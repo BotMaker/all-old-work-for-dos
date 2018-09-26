@@ -1,0 +1,177 @@
+-- now a database version 0.1
+-- only one database can be used at once
+
+data_keys[1,1]=""
+data_info[1,1]=""
+data_size[1]=1
+data_num=0
+data_name=""
+global data_name
+global data_size
+global data_num
+global data_keys
+global data_info
+
+function db_open(file_name)
+-- return 1 or 0
+  exsist=file_exsist(file_name)
+  data_name=file_name
+  if exsist=1 then
+    idd=open(file_name,"r")
+    can=0
+    line=1
+    while can=0 do
+    info[line]=get_line(idd)
+    if info[line]="#" then
+      can=1
+    end if
+    line+=1
+    end while
+    line-=1
+    data_num=line
+    data_num-=1
+    for i=1 to line do
+       len=string_length(info[i])
+       number=2
+       for j=1 to len do
+          chr=string_chr_at(info[i],j)
+          if chr="(" then
+            for k=j to len do
+              chr=string_chr_at(info[i],k)
+              if chr=")" then
+                jj=j
+                jj+=1
+                kk=k
+                kk-=1
+                data_keys[i,1]=string_copy(info[i],jj,kk)
+                for m=k to len do
+                   chr=string_chr_at(info[i],m)
+                   if chr="[" then
+                     for n=m to len do
+                       chr=string_chr_at(info[i],n)
+                       if chr="]" then
+                         mm=m
+                         mm+=1
+                         nn=n
+                         nn-=1
+                         data_keys[i,number]=string_copy(info[i],mm,nn)
+                         for p=n to len do
+                           chr=string_chr_at(info[i],p)
+                           if chr=";" then
+                           nn=n
+                           nn+=1
+                           pp=p
+                           pp-=1
+                           data_info[i,number]=string_copy(info[i],nn,pp)
+                           data_size[i]=number
+                           exit
+                           end if
+                         end for
+                         number+=1
+                         exit
+                       end if
+                     end for
+                   end if
+                end for
+                exit
+              end if
+            end for
+            exit
+          end if
+       end for
+    end for
+  close(idd)
+  return 1
+  end if
+  return 1
+  if exsist=0 then
+    idd=open(file_name,"w")
+    close(idd)
+    return 1
+  end if
+return 0
+end function
+
+sub insert_row(row)
+done=0
+line=0
+   for i=1 to data_num do
+      if data_keys[i,1]=row then
+        done=1
+        exit
+      end if
+   end for
+if done=0 then
+data_num+=1
+data_keys[data_num,1]=row
+data_keys[data_num,2]="blank"
+data_info[data_num,2]="blank"
+data_size[data_num]=2
+end if
+end sub
+
+sub insert_col(row,col,data)
+done=0
+line=0
+   for i=1 to data_num do
+      if data_keys[i,1]=row then
+        done=1
+        line=i
+        for j=2 to data_size[i] do
+           if data_keys[i,j]=col then
+              done=2
+              data_info[i,j]=data
+           exit
+           end if
+        end for
+      exit
+      end if
+   end for
+if done=0 then
+-- err row dose not exsist
+end if
+if done=1 then
+  pos=data_size[line]
+  pos+=1
+  data_size[line]+=1
+  data_keys[line,pos]=col
+  data_info[line,pos]=data
+end if
+end sub
+
+function get_data(row,col)
+   for i=1 to data_num do
+      if data_keys[i,1]=row then
+        for j=2 to data_size[i] do
+           if data_keys[i,j]=col then
+              return data_info[i,j]
+           exit
+           end if
+        end for
+      exit
+      end if
+   end for
+return ""
+end function
+
+sub db_close()
+idd=open(data_name,"w")
+   for i=1 to data_num do
+      text="("
+      text+=data_keys[i,1]
+      text+=")"
+      for j=2 to data_size[i] do
+         text+="["
+         text+=data_keys[i,j]
+         text+="]"
+         text+=data_info[i,j]
+         text+=";"
+      end for
+      put_line(idd,text)
+   end for
+data_keys[1,1]=""
+data_info[1,1]=""
+data_size[1]=1
+data_num=0
+data_name=""
+end sub
